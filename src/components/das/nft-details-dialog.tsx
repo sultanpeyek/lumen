@@ -34,11 +34,14 @@ export function NFTDetailsDialog({
           </DialogDescription>
         </DialogHeader>
         <div className="flex">
-          <img
-            src={data.image}
-            alt="Image"
-            className="h-auto w-full rounded-none flex-auto max-w-full basis-1/2"
-          />
+          {
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={data.image}
+              alt="Image"
+              className="h-auto w-full rounded-none flex-auto max-w-full basis-1/2"
+            />
+          }
         </div>
         <div className="flex items-center justify-between space-x-4">
           <div className="flex items-center space-x-4">

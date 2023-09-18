@@ -11,7 +11,6 @@ export default function Page() {
         </h1>
         <SearchCriteriaSelector />
         <SearchInputNFTsByOwner />
-        <DataTable />
       </div>
     </div>
   )

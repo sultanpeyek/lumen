@@ -1,6 +1,6 @@
 import {DataTable} from '@/components/das/data-table'
-import {Input} from '@/components/ui/input'
-import {Textarea} from '@/components/ui/textarea'
+import {SearchCriteriaSelector} from '@/components/das/search-criteria-selector'
+import {SearchNftsByIdInput} from '@/components/das/search-nfts-by-id-input'
 import {extractData} from '@/lib/extract-data'
 import {getAsset} from '@/lib/get-asset'
 
@@ -13,15 +13,15 @@ interface PageProps {
 export default async function Page({params}: PageProps) {
   const {id} = params
 
-  let result = await getAsset(id)
+  const result = await getAsset(id)
   const extractedData = extractData([result])
 
   return (
-    <div>
-      {id}
-      <DataTable data={[...extractedData]} openDialog />
-      <Textarea defaultValue={JSON.stringify(result)} readOnly rows={10} />
+    <>
+      <SearchCriteriaSelector selectedCriteriaDefaultValue="id" />
+      <SearchNftsByIdInput defaultValue={id} />
+      <DataTable data={extractedData} />
       <div>{result?.timeSpent}</div>
-    </div>
+    </>
   )
 }

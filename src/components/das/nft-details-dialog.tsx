@@ -12,17 +12,17 @@ import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
 import {DownloadIcon} from '@radix-ui/react-icons'
 import {Asset} from '@/types/das'
 
-interface NFTDetailsDialogProps {
+interface NftDetailsDialogProps {
   open?: boolean
   children: React.ReactNode
   data: Asset
 }
 
-export function NFTDetailsDialog({
+export function NftDetailsDialog({
   children,
   open,
   data,
-}: NFTDetailsDialogProps) {
+}: NftDetailsDialogProps) {
   return (
     <Dialog defaultOpen={open}>
       <DialogTrigger asChild>{children}</DialogTrigger>

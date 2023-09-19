@@ -1,11 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import {
-  ChevronDownIcon,
-  DotsHorizontalIcon,
-  EyeOpenIcon,
-} from '@radix-ui/react-icons'
+import {ChevronDownIcon, DotsHorizontalIcon} from '@radix-ui/react-icons'
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -39,7 +35,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import {NFTDetailsDialog} from '@/components/das/nft-details-dialog'
+import {NftDetailsDialog} from '@/components/das/nft-details-dialog'
 import {Asset} from '@/types/das'
 import {Avatar, AvatarImage, AvatarFallback} from '@/components/ui/avatar'
 
@@ -72,12 +68,12 @@ const columns: ColumnDef<Asset>[] = [
     accessorKey: 'image',
     header: 'Image',
     cell: ({row}) => (
-      <NFTDetailsDialog data={row.original}>
+      <NftDetailsDialog data={row.original}>
         <Avatar className="rounded-none cursor-pointer">
           <AvatarImage src={row.getValue('image')} alt="Image" />
           <AvatarFallback className="rounded-none"></AvatarFallback>
         </Avatar>
-      </NFTDetailsDialog>
+      </NftDetailsDialog>
     ),
   },
   {
@@ -153,13 +149,13 @@ export function DataTable({data}: DataTableProps) {
     },
     initialState: {
       pagination: {
-        pageSize: 15,
+        pageSize: 10,
       },
     },
   })
 
   return (
-    <div className="w-full">
+    <div className="w-full max-w-full">
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter name..."
@@ -194,7 +190,7 @@ export function DataTable({data}: DataTableProps) {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="rounded-md border">
+      <div className="rounded-md border overflow-auto">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map(headerGroup => (

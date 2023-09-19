@@ -27,10 +27,7 @@ export default async function Page({params}: PageProps) {
   return (
     <>
       <DataTable data={extractedData} />
-      <FetchTimeSpentText
-        timeSpentInMs={timeSpentInMs}
-        methodType="getAssetsByAuthority"
-      />
+      <FetchTimeSpentText timeSpentInMs={timeSpentInMs} methodType="getAsset" />
     </>
   )
 }

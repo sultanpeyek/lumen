@@ -1,5 +1,5 @@
 import {DataTable} from '@/components/das/data-table'
-import {DataTableShell} from '@/components/das/data-table-shell'
+import {FetchTimeSpentText} from '@/components/das/fetch-time-spent-text'
 import {SearchCriteriaSelector} from '@/components/das/search-criteria-selector'
 import {SearchNftsByOwnerInput} from '@/components/das/search-nfts-by-owner-input'
 import {extractData} from '@/lib/extract-data'
@@ -24,7 +24,12 @@ export default async function Page({params}: PageProps) {
       <SearchCriteriaSelector selectedCriteriaDefaultValue="owner" />
       <SearchNftsByOwnerInput defaultValue={ownerAddress} />
       <DataTable data={extractedData} />
-      <div>{result?.timeSpent}</div>
+      {result.timeSpent && (
+        <FetchTimeSpentText
+          timeSpentInMs={result.timeSpent}
+          methodType="getAssetsByOwner"
+        />
+      )}
     </>
   )
 }

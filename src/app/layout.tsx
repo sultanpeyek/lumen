@@ -15,7 +15,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en" className="dark">
       <body>
-        <div className="px-4">
+        <div className="px-4 pb-10">
           <div className="max-w-screen-xl mx-auto space-y-6">
             <h1 className="my-10 text-4xl font-bold text-center">
               Lumen — NFT Collection Explorer

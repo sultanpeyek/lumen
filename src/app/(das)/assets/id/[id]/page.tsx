@@ -10,6 +10,8 @@ interface PageProps {
   }
 }
 
+export const revalidate = 600
+
 export default async function Page({params}: PageProps) {
   const {id} = params
 

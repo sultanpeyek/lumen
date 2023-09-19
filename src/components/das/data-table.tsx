@@ -38,10 +38,16 @@ import {
 import {NftDetailsDialog} from '@/components/das/nft-details-dialog'
 import {Asset} from '@/types/das'
 import {Avatar, AvatarImage, AvatarFallback} from '@/components/ui/avatar'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 interface DataTableProps {
   data: Asset[]
-  openDialog?: boolean
 }
 
 const columns: ColumnDef<Asset>[] = [
@@ -69,9 +75,11 @@ const columns: ColumnDef<Asset>[] = [
     header: 'Image',
     cell: ({row}) => (
       <NftDetailsDialog data={row.original}>
-        <Avatar className="rounded-none cursor-pointer">
+        <Avatar className="rounded-sm cursor-pointer">
           <AvatarImage src={row.getValue('image')} alt="Image" />
-          <AvatarFallback className="rounded-none"></AvatarFallback>
+          <AvatarFallback className="rounded-sm">
+            {getInitials(row.getValue('name'))}
+          </AvatarFallback>
         </Avatar>
       </NftDetailsDialog>
     ),
@@ -88,7 +96,15 @@ const columns: ColumnDef<Asset>[] = [
   {
     accessorKey: 'id',
     header: 'Mint Address',
-    cell: ({row}) => row.getValue('id'),
+    cell: ({row}) => shortenAddress(row.getValue('id')),
+  },
+  {
+    accessorKey: 'collectionAddress',
+    header: 'Collection',
+    cell: ({row}) =>
+      row.getValue('collectionAddress')
+        ? shortenAddress(row.getValue('collectionAddress'))
+        : '-',
   },
   {
     id: 'actions',
@@ -109,11 +125,10 @@ const columns: ColumnDef<Asset>[] = [
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(payment.id)}
             >
-              Copy payment ID
+              Copy Mint Address
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem>Download Image</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )
@@ -129,6 +144,7 @@ export function DataTable({data}: DataTableProps) {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
+  const [rowsPerPage, setRowsPerPage] = React.useState(10)
 
   const table = useReactTable({
     data,
@@ -240,30 +256,74 @@ export function DataTable({data}: DataTableProps) {
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{' '}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
+      <div className="flex items-center justify-end space-x-2 py-4 flex-wrap gap-4">
+        <div className="flex-auto flex gap-2">
+          <div className="text-sm text-muted-foreground">
+            Showing{' '}
+            {Math.min(rowsPerPage, table.getFilteredRowModel().rows.length)} of{' '}
+            {table.getFilteredRowModel().rows.length} rows.
+          </div>
+          <div className="flex-1 text-sm text-muted-foreground">
+            {table.getFilteredSelectedRowModel().rows.length} of{' '}
+            {table.getFilteredRowModel().rows.length} row(s) selected.
+          </div>
         </div>
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
+        <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2">
+            <span className="text-sm text-muted-foreground">Show:</span>
+            <Select
+              onValueChange={value => {
+                setRowsPerPage(parseInt(value))
+                table.setPageSize(parseInt(value))
+              }}
+            >
+              <SelectTrigger className="w-[120px]">
+                <SelectValue placeholder={`${rowsPerPage} rows`} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="10">10 rows</SelectItem>
+                <SelectItem value="20">20 rows</SelectItem>
+                <SelectItem value="50">50 rows</SelectItem>
+                <SelectItem value="100">100 rows</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-x-2 whitespace-nowrap">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              Next
+            </Button>
+          </div>
         </div>
       </div>
     </div>
   )
+}
+
+function getInitials(name: string) {
+  const nameParts = name.split(' ')
+  if (nameParts.length === 1) {
+    return name[0].toUpperCase()
+  } else {
+    return nameParts[0][0].toUpperCase() + nameParts[1][0].toUpperCase()
+  }
+}
+
+function shortenAddress(address: string) {
+  if (address.length <= 8) {
+    return address
+  }
+  return address.substring(0, 4) + '...' + address.substring(address.length - 4)
 }

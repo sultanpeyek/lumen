@@ -1,6 +1,5 @@
 import {DataTable} from '@/components/das/data-table'
-import {SearchCriteriaSelector} from '@/components/das/search-criteria-selector'
-import {SearchNftsByIdInput} from '@/components/das/search-nfts-by-id-input'
+import {FetchTimeSpentText} from '@/components/das/fetch-time-spent-text'
 import {extractData} from '@/lib/extract-data'
 import {getAsset} from '@/lib/get-asset'
 
@@ -15,15 +14,23 @@ export const revalidate = 600
 export default async function Page({params}: PageProps) {
   const {id} = params
 
+  const startTime = Date.now()
+
   const result = await getAsset(id)
+
+  const endTime = Date.now()
+  const timeSpentInMs = endTime - startTime
+  console.log(`getAsset: ${timeSpentInMs}ms`)
+
   const extractedData = extractData([result])
 
   return (
     <>
-      <SearchCriteriaSelector selectedCriteriaDefaultValue="id" />
-      <SearchNftsByIdInput defaultValue={id} />
       <DataTable data={extractedData} />
-      <div>{result?.timeSpent}</div>
+      <FetchTimeSpentText
+        timeSpentInMs={timeSpentInMs}
+        methodType="getAssetsByAuthority"
+      />
     </>
   )
 }

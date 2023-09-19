@@ -1,6 +1,5 @@
 import {DataTable} from '@/components/das/data-table'
-import {SearchCriteriaSelector} from '@/components/das/search-criteria-selector'
-import {SearchNftsByCreatorInput} from '@/components/das/search-nfts-by-creator-input'
+import {FetchTimeSpentText} from '@/components/das/fetch-time-spent-text'
 import {extractData} from '@/lib/extract-data'
 import {getAssetsByCreator} from '@/lib/get-assets-by-creator'
 
@@ -15,19 +14,27 @@ export const revalidate = 600
 
 export default async function Page({params}: PageProps) {
   const {creatorAddress, onlyVerified} = params
+
+  const startTime = Date.now()
+
   let result = await getAssetsByCreator({
     creatorAddress,
     onlyVerified: onlyVerified === 'verified',
   })
 
+  const endTime = Date.now()
+  const timeSpentInMs = endTime - startTime
+  console.log(`getAssetsByCreator: ${timeSpentInMs}ms`)
+
   const extractedData = extractData(result.items)
 
   return (
     <>
-      <SearchCriteriaSelector selectedCriteriaDefaultValue="owner" />
-      <SearchNftsByCreatorInput defaultValue={creatorAddress} />
       <DataTable data={extractedData} />
-      <div>{result?.timeSpent}</div>
+      <FetchTimeSpentText
+        timeSpentInMs={timeSpentInMs}
+        methodType="getAssetsByAuthority"
+      />
     </>
   )
 }

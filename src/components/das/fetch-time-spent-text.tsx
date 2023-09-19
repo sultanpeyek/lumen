@@ -33,13 +33,15 @@ export function FetchTimeSpentText({
       <Alert>
         <RocketIcon className="h-4 w-4 !text-primary" />
         <AlertTitle>
-          This data {isExceedingThreshold ? 'was fetched' : 'fetched in just'}{' '}
-          <strong className="text-primary">{readableTime}</strong> using the
-          Helius DAS API&apos;s{' '}
-          <span className="font-mono">`{methodType}`</span> method call.
+          Experience unparalleled speed and efficiency with Helius!
         </AlertTitle>
         <AlertDescription>
-          <p>Experience unparalleled speed and efficiency with Helius!</p>
+          <p>
+            This data {isExceedingThreshold ? 'was fetched' : 'fetched in just'}{' '}
+            <strong className="text-primary">{readableTime}</strong> using the
+            Helius DAS API&apos;s{' '}
+            <span className="font-mono">`{methodType}`</span> method call.
+          </p>
         </AlertDescription>
       </Alert>
     </div>

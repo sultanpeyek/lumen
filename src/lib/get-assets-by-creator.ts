@@ -1,6 +1,5 @@
 import {zod} from '@/lib/zod'
-import {ExtendedGetAssetResponseList} from '@/types/das'
-import {Helius} from 'helius-sdk'
+import {DAS, Helius} from 'helius-sdk'
 import {z} from 'zod'
 
 export const getAssetsByCreator = zod(
@@ -8,10 +7,8 @@ export const getAssetsByCreator = zod(
     creatorAddress: z.string(),
     onlyVerified: z.boolean(),
   }),
-  async (input): Promise<ExtendedGetAssetResponseList> => {
+  async (input): Promise<DAS.GetAssetResponseList> => {
     const {creatorAddress, onlyVerified} = input
-
-    const startTime = Date.now()
 
     const helius = new Helius(process.env.HELIUS_API_KEY!)
 
@@ -26,12 +23,17 @@ export const getAssetsByCreator = zod(
         onlyVerified,
         page,
       })
-      totalResults.push(...result.items)
 
-      if (result.items.length < MAX_ITEMS_PER_REQUEST) {
+      if (!result || !result.items || result.items.length === 0) {
         hasMoreResults = false
       } else {
-        page++
+        totalResults.push(...result.items)
+
+        if (result.items.length < MAX_ITEMS_PER_REQUEST) {
+          hasMoreResults = false
+        } else {
+          page++
+        }
       }
     }
 
@@ -42,11 +44,6 @@ export const getAssetsByCreator = zod(
       items: totalResults,
     }
 
-    const endTime = Date.now()
-    const timeSpent = endTime - startTime // in milliseconds
-
-    console.log(`getAssetsByCreator: ${timeSpent}ms`)
-
-    return {...response, timeSpent}
+    return response
   },
 )

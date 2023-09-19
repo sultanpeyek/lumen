@@ -1,9 +1,9 @@
 import {Card, CardContent, CardHeader} from '@/components/ui/card'
 import {Skeleton} from '@/components/ui/skeleton'
-import {searchCriteria} from '@/config/site'
+import {searchMethods} from '@/config/site'
 import {cn} from '@/lib/utils'
 
-export function SearchCriteriaSelectorShell() {
+export function SearchMethodSelectorShell() {
   return (
     <Card>
       <CardHeader>
@@ -12,7 +12,7 @@ export function SearchCriteriaSelectorShell() {
       </CardHeader>
       <CardContent className="grid gap-6">
         <div className="grid grid-cols-3 gap-4">
-          {searchCriteria.map(criteria => (
+          {searchMethods.map(criteria => (
             <div
               key={criteria.value}
               className={cn(

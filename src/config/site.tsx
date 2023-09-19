@@ -6,7 +6,7 @@ import {
   FaLink,
 } from 'react-icons/fa'
 
-export const searchCriteria = [
+export const searchMethods = [
   {
     value: 'owner',
     searchUrlPath: '/search/owner',
@@ -20,7 +20,7 @@ export const searchCriteria = [
     icon: <FaLink className="mb-3 h-6 w-6" />,
   },
   {
-    value: 'group.collection',
+    value: 'group',
     searchUrlPath: '/search/group/collection',
     label: 'By Group (Collection)',
     icon: <FaLayerGroup className="mb-3 h-6 w-6" />,

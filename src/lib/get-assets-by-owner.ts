@@ -1,13 +1,10 @@
 import {zod} from '@/lib/zod'
-import {ExtendedGetAssetResponseList} from '@/types/das'
 import {DAS, Helius} from 'helius-sdk'
 import {z} from 'zod'
 
 export const getAssetsByOwner = zod(
   z.string(),
-  async (ownerAddress): Promise<ExtendedGetAssetResponseList> => {
-    const startTime = Date.now()
-
+  async (ownerAddress): Promise<DAS.GetAssetResponseList> => {
     const helius = new Helius(process.env.HELIUS_API_KEY!)
 
     let page = 1
@@ -20,12 +17,17 @@ export const getAssetsByOwner = zod(
         ownerAddress,
         page,
       })
-      totalResults.push(...result.items)
 
-      if (result.items.length < MAX_ITEMS_PER_REQUEST) {
+      if (!result || !result.items || result.items.length === 0) {
         hasMoreResults = false
       } else {
-        page++
+        totalResults.push(...result.items)
+
+        if (result.items.length < MAX_ITEMS_PER_REQUEST) {
+          hasMoreResults = false
+        } else {
+          page++
+        }
       }
     }
 
@@ -36,11 +38,6 @@ export const getAssetsByOwner = zod(
       items: totalResults,
     }
 
-    const endTime = Date.now()
-    const timeSpent = endTime - startTime // in milliseconds
-
-    console.log(`getAssetsByOwner: ${timeSpent}ms`)
-
-    return {...response, timeSpent}
+    return response
   },
 )

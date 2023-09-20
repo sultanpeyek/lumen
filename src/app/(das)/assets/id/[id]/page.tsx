@@ -1,8 +1,10 @@
-import {DataTable} from '@/components/das/data-table'
 import {FetchTimeSpentText} from '@/components/das/fetch-time-spent-text'
+import {NftDetailsCard} from '@/components/das/nft-details-card'
+import {NftDetailsCardShell} from '@/components/das/nft-details-card-shell'
 import {SearchNftsByIdInput} from '@/components/das/search-nfts-by-id-input'
 import {extractData} from '@/lib/extract-data'
 import {getAsset} from '@/lib/get-asset'
+import {notFound} from 'next/navigation'
 
 interface PageProps {
   params: {
@@ -25,10 +27,14 @@ export default async function Page({params}: PageProps) {
 
   const extractedData = extractData([result])
 
+  if (!extractedData || extractedData.length === 0) {
+    notFound()
+  }
+
   return (
     <>
       <SearchNftsByIdInput defaultValue={id} />
-      <DataTable data={extractedData} />
+      <NftDetailsCard data={result} />
       <FetchTimeSpentText timeSpentInMs={timeSpentInMs} methodType="getAsset" />
     </>
   )

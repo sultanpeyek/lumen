@@ -11,6 +11,7 @@ export function extractData(data: DAS.GetAssetResponse[]): Asset[] {
       collectionAddress:
         item.grouping?.find(group => group.group_key === 'collection')
           ?.group_value ?? '',
+      rawData: item,
     }
   })
 

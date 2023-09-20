@@ -45,6 +45,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import Link from 'next/link'
+import {
+  safeLocalStorageGetItem,
+  safeLocalStorageSetItem,
+} from '@/lib/safe-local-storage'
+import {usePathname} from 'next/navigation'
+import {useIsMounted} from '@/hooks/use-is-mounted'
 
 interface DataTableProps {
   data: Asset[]
@@ -96,7 +103,11 @@ const columns: ColumnDef<Asset>[] = [
   {
     accessorKey: 'id',
     header: 'Mint Address',
-    cell: ({row}) => shortenAddress(row.getValue('id')),
+    cell: ({row}) => (
+      <Link href={`/assets/id/${row.getValue('id')}`}>
+        {shortenAddress(row.getValue('id'))}
+      </Link>
+    ),
   },
   {
     accessorKey: 'collectionAddress',
@@ -146,6 +157,12 @@ export function DataTable({data}: DataTableProps) {
   const [rowSelection, setRowSelection] = React.useState({})
   const [rowsPerPage, setRowsPerPage] = React.useState(10)
 
+  const pathname = usePathname()
+  const localStorageKey = `tablePageIndex${pathname}`
+
+  const isMounted = useIsMounted()
+  const initialPageIndex = 0
+
   const table = useReactTable({
     data,
     columns,
@@ -166,9 +183,47 @@ export function DataTable({data}: DataTableProps) {
     initialState: {
       pagination: {
         pageSize: 10,
+        pageIndex: initialPageIndex,
       },
     },
+    autoResetPageIndex: false,
   })
+
+  React.useEffect(() => {
+    if (isMounted) {
+      // 1. Calculate total number of pages
+      const totalPages = Math.ceil(
+        table.getFilteredRowModel().rows.length / rowsPerPage,
+      )
+
+      // 2. Check if current pageIndex exceeds total pages
+      let currentPageIndex = parseInt(
+        safeLocalStorageGetItem(localStorageKey) || '0',
+        10,
+      )
+      if (currentPageIndex >= totalPages) {
+        currentPageIndex = 0 // Reset to 0
+      }
+      table.setPageIndex(currentPageIndex)
+      safeLocalStorageSetItem(localStorageKey, String(currentPageIndex))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    table.getFilteredRowModel().rows.length,
+    isMounted,
+    rowsPerPage,
+  ])
+
+  React.useEffect(() => {
+    if (isMounted) {
+      safeLocalStorageSetItem(
+        localStorageKey,
+        String(table.getState().pagination.pageIndex),
+      )
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [table.getState().pagination.pageIndex, isMounted])
 
   return (
     <div className="w-full max-w-full">
@@ -310,13 +365,33 @@ export function DataTable({data}: DataTableProps) {
   )
 }
 
-function getInitials(name: string) {
+function getInitials(name: string): string {
   const nameParts = name.split(' ')
-  if (nameParts.length === 1) {
-    return name[0].toUpperCase()
-  } else {
-    return nameParts[0][0].toUpperCase() + nameParts[1][0].toUpperCase()
+  let initials = ''
+
+  for (const part of nameParts) {
+    const char = part.match(/[a-zA-Z]/)
+    if (char) {
+      initials += char[0].toUpperCase()
+      if (initials.length === 2) {
+        break
+      }
+    }
   }
+
+  if (initials.length === 0) {
+    return ''
+  } else if (initials.length === 1 && nameParts.length > 1) {
+    for (let i = 1; i < nameParts.length; i++) {
+      const char = nameParts[i].match(/[a-zA-Z]/)
+      if (char) {
+        initials += char[0].toUpperCase()
+        break
+      }
+    }
+  }
+
+  return initials
 }
 
 function shortenAddress(address: string) {

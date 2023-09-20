@@ -86,6 +86,9 @@ dependencies:
   react-icons:
     specifier: ^4.11.0
     version: 4.11.0(react@18.2.0)
+  react-json-view-lite:
+    specifier: ^1.0.0
+    version: 1.0.0(react@18.2.0)
   tailwind-merge:
     specifier: ^1.14.0
     version: 1.14.0
@@ -3272,6 +3275,15 @@ packages:
 
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
+    dev: false
+
+  /react-json-view-lite@1.0.0(react@18.2.0):
+    resolution: {integrity: sha512-2Ozbq9uoUw7CY+SR/efvoCRBOimh8X8Uv8ERJas7tKQcNtBqJaREC0+4nppCmOGnAhKrdobmEgT2JU1V+wu6/g==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      react: ^16.13.1 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react-remove-scroll-bar@2.3.4(@types/react@18.2.21)(react@18.2.0):

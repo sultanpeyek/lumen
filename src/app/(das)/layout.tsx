@@ -1,4 +1,4 @@
-import {BackToPreviousLink} from '@/components/das/back-to-previous-link'
+import {BackToPreviousLink} from '@/components/common/back-to-previous-link'
 import {IoMdFlashlight} from 'react-icons/io'
 
 export default function Layout({children}: {children: React.ReactNode}) {

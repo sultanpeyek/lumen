@@ -56,4 +56,22 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Scrollbar */
+  * {
+    scrollbar-color: black white;
+    scrollbar-width: 4px;
+  }
+
+  *::-webkit-scrollbar-track {
+    @apply bg-background shadow-none;
+  }
+
+  *::-webkit-scrollbar {
+    @apply bg-background bg-repeat;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    @apply overflow-hidden rounded-lg border-4 border-solid border-background bg-white/40;
+  }
 }

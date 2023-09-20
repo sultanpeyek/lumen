@@ -130,7 +130,7 @@ const columns: ColumnDef<Asset>[] = [
     id: 'actions',
     enableHiding: false,
     cell: ({row}) => {
-      const payment = row.original
+      const nft = row.original
 
       return (
         <DropdownMenu>
@@ -142,13 +142,19 @@ const columns: ColumnDef<Asset>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
+              onClick={() => navigator.clipboard.writeText(nft.id)}
             >
               Copy Mint Address
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Download Image</DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() =>
+                navigator.clipboard.writeText(nft.collectionAddress)
+              }
+            >
+              Copy Collection Address
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )
@@ -236,7 +242,7 @@ export function DataTable({data}: DataTableProps) {
 
   return (
     <div className="w-full max-w-full">
-      <div className="flex items-center justify-between py-4 space-x-2">
+      <div className="flex items-center justify-between space-x-2">
         <Input
           placeholder="Filter name..."
           value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
@@ -270,7 +276,7 @@ export function DataTable({data}: DataTableProps) {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="rounded-md border overflow-auto">
+      <div className="mt-4 rounded-md border overflow-auto">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map(headerGroup => (

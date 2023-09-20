@@ -1,3 +1,4 @@
+import {CONFIG} from '@/config/api'
 import {zod} from '@/lib/zod'
 import {DAS, Helius} from 'helius-sdk'
 import {z} from 'zod'
@@ -15,13 +16,14 @@ export const getAssetsByCreator = zod(
     let page = 1
     let hasMoreResults = true
     let totalResults = []
-    const MAX_ITEMS_PER_REQUEST = 1000
+    const MAX_ITEMS_PER_REQUEST = CONFIG.MAX_API_REQUEST_ITEMS
 
     while (hasMoreResults) {
       const result = await helius.rpc.getAssetsByCreator({
         creatorAddress,
         onlyVerified,
         page,
+        limit: CONFIG.HELIUS_MAX_LIMIT_PER_REQUEST,
       })
 
       if (!result || !result.items || result.items.length === 0) {
@@ -29,7 +31,11 @@ export const getAssetsByCreator = zod(
       } else {
         totalResults.push(...result.items)
 
-        if (result.items.length < MAX_ITEMS_PER_REQUEST) {
+        if (totalResults.length >= MAX_ITEMS_PER_REQUEST) {
+          break
+        }
+
+        if (result.items.length < CONFIG.HELIUS_MAX_LIMIT_PER_REQUEST) {
           hasMoreResults = false
         } else {
           page++

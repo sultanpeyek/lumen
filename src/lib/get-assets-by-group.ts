@@ -1,6 +1,7 @@
 import {zod} from '@/lib/zod'
 import {DAS, Helius} from 'helius-sdk'
 import {z} from 'zod'
+import {CONFIG} from '@/config/api' // Import the CONFIG
 
 export const getAssetsByGroup = zod(
   z.object({
@@ -15,13 +16,14 @@ export const getAssetsByGroup = zod(
     let page = 1
     let hasMoreResults = true
     let totalResults = []
-    const MAX_ITEMS_PER_REQUEST = 1000
+    const MAX_ITEMS_PER_REQUEST = CONFIG.MAX_API_REQUEST_ITEMS
 
     while (hasMoreResults) {
       const result = await helius.rpc.getAssetsByGroup({
         groupKey,
         groupValue,
         page,
+        limit: CONFIG.HELIUS_MAX_LIMIT_PER_REQUEST,
       })
 
       if (!result || !result.items || result.items.length === 0) {
@@ -29,7 +31,11 @@ export const getAssetsByGroup = zod(
       } else {
         totalResults.push(...result.items)
 
-        if (result.items.length < MAX_ITEMS_PER_REQUEST) {
+        if (totalResults.length >= MAX_ITEMS_PER_REQUEST) {
+          break
+        }
+
+        if (result.items.length < CONFIG.HELIUS_MAX_LIMIT_PER_REQUEST) {
           hasMoreResults = false
         } else {
           page++

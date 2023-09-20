@@ -7,7 +7,7 @@ import {DAS} from 'helius-sdk'
 import Link from 'next/link'
 import {FaExternalLinkAlt} from 'react-icons/fa'
 
-import {JsonView, allExpanded, darkStyles} from 'react-json-view-lite'
+import {JsonView, collapseAllNested, darkStyles} from 'react-json-view-lite'
 import 'react-json-view-lite/dist/index.css'
 
 interface NftDetailsProps {
@@ -202,10 +202,10 @@ export function NftDetails({data}: NftDetailsProps) {
 
       <div className="grid mt-4 space-y-2">
         <h2 className="text-xl font-medium">Full JSON Response</h2>
-        <div className="rounded-md max-h-[250px] w-full overflow-auto border">
+        <div className="rounded-md max-h-[310px] w-full overflow-auto border">
           <JsonView
             data={data}
-            shouldExpandNode={allExpanded}
+            shouldExpandNode={collapseAllNested}
             style={darkStyles}
           />
         </div>

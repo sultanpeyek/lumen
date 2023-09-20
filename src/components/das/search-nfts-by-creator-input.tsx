@@ -35,7 +35,10 @@ export function SearchNftsByCreatorInput({
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    router.push(`/assets/creator/verified/${input}`, {scroll: false})
+    router.push(
+      `/assets/creator/${isOnlyVerified ? 'verified' : 'all'}/${input}`,
+      {scroll: false},
+    )
   }
 
   return (

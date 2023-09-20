@@ -14,7 +14,7 @@ interface PageProps {
 export const revalidate = 600
 
 export default async function Page({params}: PageProps) {
-  const {creatorAddress, onlyVerified} = params
+  const {onlyVerified, creatorAddress} = params
 
   const startTime = Date.now()
 
@@ -31,7 +31,10 @@ export default async function Page({params}: PageProps) {
 
   return (
     <>
-      <SearchNftsByCreatorInput defaultValue={creatorAddress} />
+      <SearchNftsByCreatorInput
+        defaultValue={creatorAddress}
+        onlyVerified={onlyVerified === 'verified'}
+      />
       <DataTable data={extractedData} />
       <FetchTimeSpentText
         timeSpentInMs={timeSpentInMs}

@@ -10,7 +10,8 @@ interface PageProps {
     ownerAddress: string
   }
 }
-export const revalidate = 600
+
+export const revalidate = 60
 
 export default async function Page({params}: PageProps) {
   const {ownerAddress} = params

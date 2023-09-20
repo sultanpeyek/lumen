@@ -1,8 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import {useEffect, useState} from 'react'
-import {usePathname, useRouter, useSelectedLayoutSegment} from 'next/navigation'
+import {useRouter, useSelectedLayoutSegment} from 'next/navigation'
 import {FaChevronLeft} from 'react-icons/fa'
 
 export function BackToPreviousLink() {

@@ -104,18 +104,27 @@ const columns: ColumnDef<Asset>[] = [
     accessorKey: 'id',
     header: 'Mint Address',
     cell: ({row}) => (
-      <Link href={`/assets/id/${row.getValue('id')}`}>
-        {shortenAddress(row.getValue('id'))}
-      </Link>
+      <NftDetailsDialog data={row.original}>
+        <div className="hover:text-primary hover:underline cursor-pointer">
+          {shortenAddress(row.getValue('id'))}
+        </div>
+      </NftDetailsDialog>
     ),
   },
   {
     accessorKey: 'collectionAddress',
     header: 'Collection',
     cell: ({row}) =>
-      row.getValue('collectionAddress')
-        ? shortenAddress(row.getValue('collectionAddress'))
-        : '-',
+      row.getValue('collectionAddress') ? (
+        <Link
+          href={`/assets/group/collection/${row.getValue('collectionAddress')}`}
+          className="hover:text-primary hover:underline"
+        >
+          {shortenAddress(row.getValue('collectionAddress'))}
+        </Link>
+      ) : (
+        '-'
+      ),
   },
   {
     id: 'actions',

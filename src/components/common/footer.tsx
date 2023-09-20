@@ -2,13 +2,13 @@ import Link from 'next/link'
 
 export default function Footer() {
   return (
-    <div className="w-full mx-auto text-white p-4 shadow-md">
+    <div className="w-full mx-auto text-white py-4 shadow-md">
       <div className="container md:flex md:justify-between md:items-center">
         <div className="text-center md:text-left mb-2 md:mb-0">
           Made by{' '}
           <Link
             href="https://x.com/sultanpeyek"
-            className="text-primary/80 hover:text-primary"
+            className="text-primary hover:underline"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -16,7 +16,7 @@ export default function Footer() {
           </Link>
         </div>
 
-        <div className="flex justify-center space-x-6">
+        <div className="flex justify-center text-center space-x-6">
           <Link
             href="https://github.com/sultanpeyek/lumen"
             className="text-gray-300 hover:text-white"
@@ -33,7 +33,7 @@ export default function Footer() {
             rel="noopener noreferrer"
           >
             Powered by{' '}
-            <span className="text-primary/80 group-hover:text-primary">
+            <span className="text-primary group-hover:underline">
               Helius DAS API
             </span>
           </Link>

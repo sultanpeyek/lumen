@@ -18,7 +18,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     <html lang="en" className="dark">
       <body className="flex flex-col min-h-screen">
         <AnimatedBackgroundGradient className="h-2" />
-        <div className="flex-1 px-4 pt-4 pb-10 max-w-full w-full">
+        <div className="flex-1 max-w-full w-full pb-10">
           <div className="container space-y-6">{children}</div>
         </div>
         <AnimatedBackgroundGradient className="h-2" />

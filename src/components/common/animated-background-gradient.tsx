@@ -1,5 +1,6 @@
 'use client'
 
+import {cn} from '@/lib/utils'
 import React, {useEffect, useState} from 'react'
 
 const colors: number[][] = [
@@ -74,7 +75,7 @@ export default function AnimatedBackgroundGradient({
 
   return (
     <div
-      className={className}
+      className={cn('bg-primary', className)}
       style={{
         width: '100%',
         padding: 0,

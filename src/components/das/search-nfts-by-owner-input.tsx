@@ -28,7 +28,7 @@ export function SearchNftsByOwnerInput({
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setIsLoading(true)
-    router.push(`/assets/owner/${input}`)
+    router.push(`/assets/owner/${input}`, {scroll: false})
   }
 
   const [isLoading, setIsLoading] = React.useState(false)

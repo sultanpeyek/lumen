@@ -1,5 +1,6 @@
 import {DataTable} from '@/components/das/data-table'
 import {FetchTimeSpentText} from '@/components/das/fetch-time-spent-text'
+import {SearchNftsByIdInput} from '@/components/das/search-nfts-by-id-input'
 import {extractData} from '@/lib/extract-data'
 import {getAsset} from '@/lib/get-asset'
 
@@ -26,6 +27,7 @@ export default async function Page({params}: PageProps) {
 
   return (
     <>
+      <SearchNftsByIdInput defaultValue={id} />
       <DataTable data={extractedData} />
       <FetchTimeSpentText timeSpentInMs={timeSpentInMs} methodType="getAsset" />
     </>

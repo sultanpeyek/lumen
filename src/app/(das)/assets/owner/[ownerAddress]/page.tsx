@@ -1,5 +1,6 @@
 import {DataTable} from '@/components/das/data-table'
 import {FetchTimeSpentText} from '@/components/das/fetch-time-spent-text'
+import {SearchNftsByOwnerInput} from '@/components/das/search-nfts-by-owner-input'
 import {extractData} from '@/lib/extract-data'
 import {getAssetsByOwner} from '@/lib/get-assets-by-owner'
 import * as React from 'react'
@@ -26,6 +27,7 @@ export default async function Page({params}: PageProps) {
 
   return (
     <>
+      <SearchNftsByOwnerInput defaultValue={ownerAddress} />
       <DataTable data={extractedData} />
       <FetchTimeSpentText
         timeSpentInMs={timeSpentInMs}

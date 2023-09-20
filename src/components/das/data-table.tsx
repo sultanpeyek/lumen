@@ -172,7 +172,7 @@ export function DataTable({data}: DataTableProps) {
 
   return (
     <div className="w-full max-w-full">
-      <div className="flex items-center py-4">
+      <div className="flex items-center justify-between py-4 space-x-2">
         <Input
           placeholder="Filter name..."
           value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
@@ -256,8 +256,8 @@ export function DataTable({data}: DataTableProps) {
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4 flex-wrap gap-4">
-        <div className="flex-auto flex gap-2">
+      <div className="flex flex-col sm:flex-row items-center py-4 space-y-2">
+        <div className="flex-auto space-y-1">
           <div className="text-sm text-muted-foreground">
             Showing{' '}
             {Math.min(rowsPerPage, table.getFilteredRowModel().rows.length)} of{' '}
@@ -268,7 +268,7 @@ export function DataTable({data}: DataTableProps) {
             {table.getFilteredRowModel().rows.length} row(s) selected.
           </div>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2">
           <div className="flex items-center space-x-2">
             <span className="text-sm text-muted-foreground">Show:</span>
             <Select
@@ -291,7 +291,6 @@ export function DataTable({data}: DataTableProps) {
           <div className="space-x-2 whitespace-nowrap">
             <Button
               variant="outline"
-              size="sm"
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
             >
@@ -299,7 +298,6 @@ export function DataTable({data}: DataTableProps) {
             </Button>
             <Button
               variant="outline"
-              size="sm"
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
             >

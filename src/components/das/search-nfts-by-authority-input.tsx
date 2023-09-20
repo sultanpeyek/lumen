@@ -27,7 +27,7 @@ export function SearchNftsByAuthorityInput({
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    router.push(`/assets/authority/${input}`)
+    router.push(`/assets/authority/${input}`, {scroll: false})
   }
 
   return (

@@ -1,5 +1,6 @@
 import {DataTable} from '@/components/das/data-table'
 import {FetchTimeSpentText} from '@/components/das/fetch-time-spent-text'
+import {SearchNftsByGroupCollectionInput} from '@/components/das/search-nfts-by-group-collection-input'
 import {extractData} from '@/lib/extract-data'
 import {getAssetsByGroup} from '@/lib/get-assets-by-group'
 
@@ -30,6 +31,7 @@ export default async function Page({params}: PageProps) {
 
   return (
     <>
+      <SearchNftsByGroupCollectionInput defaultValue={groupValue} />
       <DataTable data={extractedData} />
       <FetchTimeSpentText
         timeSpentInMs={timeSpentInMs}

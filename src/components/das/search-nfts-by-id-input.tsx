@@ -25,7 +25,7 @@ export function SearchNftsByIdInput({defaultValue}: SearchNftsByIdInputProps) {
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    router.push(`/assets/id/${input}`)
+    router.push(`/assets/id/${input}`, {scroll: false})
   }
 
   return (

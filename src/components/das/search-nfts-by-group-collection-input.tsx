@@ -27,7 +27,7 @@ export function SearchNftsByGroupCollectionInput({
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    router.push(`/assets/group/collection/${input}`)
+    router.push(`/assets/group/collection/${input}`, {scroll: false})
   }
 
   return (

@@ -39,8 +39,8 @@ export function FetchTimeSpentText({
           <p>
             This data {isExceedingThreshold ? 'was fetched' : 'fetched in just'}{' '}
             <strong className="text-primary">{readableTime}</strong> using the
-            Helius DAS API&apos;s{' '}
-            <span className="font-mono">`{methodType}`</span> method call.
+            Helius DAS API <span className="font-mono">`{methodType}`</span>{' '}
+            method call.
           </p>
         </AlertDescription>
       </Alert>

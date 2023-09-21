@@ -31,7 +31,7 @@ export function SearchNftsByGroupCollectionInput({
   }
 
   const setSampleGroupCollectionAddress = () => {
-    setInput('FEg3mmpcrcRsVTuc2n3oghHpRvAtEJJau4KWjaPpLKcA')
+    setInput('J6RJFQfLgBTcoAt3KoZFiTFW9AbufsztBNDgZ7Znrp1Q')
   }
 
   return (

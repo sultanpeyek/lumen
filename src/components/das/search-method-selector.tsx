@@ -23,11 +23,7 @@ export function SearchMethodSelector() {
       <CardContent className="grid gap-6">
         <div className="grid grid-cols-3 gap-4">
           {searchMethods.map(method => (
-            <Link
-              href={`${method.searchUrlPath}`}
-              key={method.value}
-              scroll={false}
-            >
+            <Link href={`${method.searchUrlPath}`} key={method.value}>
               <Label
                 htmlFor={method.value}
                 className={cn(

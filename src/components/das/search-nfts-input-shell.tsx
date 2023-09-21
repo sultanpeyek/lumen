@@ -10,7 +10,7 @@ export function SearchNftsInputShell() {
       </CardHeader>
       <CardContent className="grid gap-6">
         <div className="flex w-full items-center space-x-2">
-          <div className="flex-1 h-9 rounded-md border-2 border-muted bg-popover py-2 px-3">
+          <div className="flex-1 h-9 rounded-md border border-muted bg-popover py-2 px-3">
             <Skeleton className="h-4 max-w-[240px] w-full" />
           </div>
           <Skeleton className="h-9 w-9" />

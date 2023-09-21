@@ -27,7 +27,7 @@ export function NftDetailsDialog({
   return (
     <Dialog defaultOpen={open}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="max-w-screen-lg overflow-y-scroll max-h-screen">
+      <DialogContent className="max-w-screen-lg overflow-y-scroll safari-fallback">
         <NftDetails data={data.rawData} />
       </DialogContent>
     </Dialog>

@@ -57,6 +57,17 @@
     @apply bg-background text-foreground;
   }
 
+  /* Safari Fallback */
+  .safari-fallback {
+    height: 100dvh; /* Your preferred property value */
+  }
+
+  @supports not (height: 100dvh) {
+    .safari-fallback {
+      height: 100vh; /* Fallback value */
+    }
+  }
+
   /* Scrollbar */
   * {
     scrollbar-color: black white;

@@ -7,11 +7,14 @@ export default function Layout({children}: {children: React.ReactNode}) {
     <>
       <div className="my-4 flex items-center gap-4">
         <BackToPreviousLink />
-        <div>
-          <div className="text-xl font-bold text-left flex items-center gap-2">
-            <IoMdFlashlight className="text-xl text-primary shrink-0" />
-            <Link href="/">Lumen — NFT Collection Explorer</Link>
-          </div>
+        <div className="text-lg font-bold text-left flex items-center space-x-2 hover:opacity-80">
+          <IoMdFlashlight className="text-lg text-primary shrink-0" />
+          <Link href="/">
+            Lumen{' '}
+            <small className="font-normal text-muted-foreground">
+              — SOL NFT Collection Explorer
+            </small>
+          </Link>
         </div>
       </div>
       {children}

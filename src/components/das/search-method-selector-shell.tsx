@@ -16,7 +16,7 @@ export function SearchMethodSelectorShell() {
             <div
               key={criteria.value}
               className={cn(
-                'flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground cursor-pointer',
+                'flex flex-col items-center justify-between rounded-md border border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground cursor-pointer',
               )}
             >
               <Skeleton className="w-full h-[50px]" />

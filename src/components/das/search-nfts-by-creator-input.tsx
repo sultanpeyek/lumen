@@ -35,10 +35,15 @@ export function SearchNftsByCreatorInput({
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    router.push(
-      `/assets/creator/${isOnlyVerified ? 'verified' : 'all'}/${input}`,
-      {scroll: false},
-    )
+    const url = `/assets/creator/${
+      isOnlyVerified ? 'verified' : 'all'
+    }/${input}`
+    router.push(url, {scroll: false})
+  }
+
+  const setSampleCreatorAddress = () => {
+    setInput('FEg3mmpcrcRsVTuc2n3oghHpRvAtEJJau4KWjaPpLKcA')
+    setIsOnlyVerified(true)
   }
 
   return (
@@ -46,14 +51,21 @@ export function SearchNftsByCreatorInput({
       <CardHeader>
         <CardTitle>Search NFT by Creator</CardTitle>
         <CardDescription>
-          Enter a Creator address to begin your search.
+          Enter a Creator address to begin your search or{' '}
+          <span
+            className="text-primary cursor-pointer"
+            onClick={setSampleCreatorAddress}
+          >
+            use a sample address
+          </span>{' '}
+          to see how it works.
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-6">
         <form onSubmit={handleFormSubmit} className="space-y-4">
           <div className="flex w-full items-center space-x-2">
             <Input
-              id="walletAddress"
+              id="creatorAddress"
               placeholder="Enter Creator address..."
               className="flex-1"
               autoComplete="off"
@@ -68,10 +80,8 @@ export function SearchNftsByCreatorInput({
           <div className="flex items-center space-x-2">
             <Switch
               id="only-verified"
-              defaultChecked={isOnlyVerified}
-              onCheckedChange={checked => {
-                setIsOnlyVerified(checked)
-              }}
+              checked={isOnlyVerified}
+              onCheckedChange={checked => setIsOnlyVerified(checked)}
             />
             <Label htmlFor="only-verified">
               Only show NFTs verified by the entered creator

@@ -30,12 +30,23 @@ export function SearchNftsByGroupCollectionInput({
     router.push(`/assets/group/collection/${input}`, {scroll: false})
   }
 
+  const setSampleGroupCollectionAddress = () => {
+    setInput('FEg3mmpcrcRsVTuc2n3oghHpRvAtEJJau4KWjaPpLKcA')
+  }
+
   return (
     <Card>
       <CardHeader>
         <CardTitle>Search NFT by Group (Collection)</CardTitle>
         <CardDescription>
-          Enter a Collection address to begin your search.
+          Enter a Collection address to begin your search or{' '}
+          <span
+            className="text-primary cursor-pointer"
+            onClick={setSampleGroupCollectionAddress}
+          >
+            use a sample address
+          </span>{' '}
+          to see how it works.
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-6">
@@ -44,7 +55,7 @@ export function SearchNftsByGroupCollectionInput({
           className="flex w-full items-center space-x-2"
         >
           <Input
-            id="walletAddress"
+            id="groupCollectionAddress"
             placeholder="Enter Collection address..."
             className="flex-1"
             autoComplete="off"

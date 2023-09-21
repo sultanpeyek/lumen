@@ -30,12 +30,23 @@ export function SearchNftsByAuthorityInput({
     router.push(`/assets/authority/${input}`, {scroll: false})
   }
 
+  const setSampleAuthorityAddress = () => {
+    setInput('HVQTKbAmQYBpxSE5sXRNgMtuhDQ7t1ewFpvAGwzAUmFM')
+  }
+
   return (
     <Card>
       <CardHeader>
         <CardTitle>Search NFT by Authority</CardTitle>
         <CardDescription>
-          Enter a Authority address to begin your search.
+          Enter an Authority address to begin your search or{' '}
+          <span
+            className="text-primary cursor-pointer"
+            onClick={setSampleAuthorityAddress}
+          >
+            use a sample address
+          </span>{' '}
+          to see how it works.
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-6">
@@ -44,7 +55,7 @@ export function SearchNftsByAuthorityInput({
           className="flex w-full items-center space-x-2"
         >
           <Input
-            id="walletAddress"
+            id="authorityAddress"
             placeholder="Enter Authority address..."
             className="flex-1"
             autoComplete="off"

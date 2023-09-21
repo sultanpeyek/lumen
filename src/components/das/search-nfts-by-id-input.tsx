@@ -28,12 +28,23 @@ export function SearchNftsByIdInput({defaultValue}: SearchNftsByIdInputProps) {
     router.push(`/assets/id/${input}`, {scroll: false})
   }
 
+  const setSampleMintAddress = () => {
+    setInput('HL9Uadka3nHM6gHYQmBAopBwU79tviorkSYocCJAW1Da')
+  }
+
   return (
     <Card>
       <CardHeader>
         <CardTitle>Search NFT by ID (Mint)</CardTitle>
         <CardDescription>
-          Enter a Mint address to begin your search.
+          Enter a Mint address to begin your search or{' '}
+          <span
+            className="text-primary cursor-pointer"
+            onClick={setSampleMintAddress}
+          >
+            use a sample address
+          </span>{' '}
+          to see how it works.
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-6">
@@ -42,7 +53,7 @@ export function SearchNftsByIdInput({defaultValue}: SearchNftsByIdInputProps) {
           className="flex w-full items-center space-x-2"
         >
           <Input
-            id="walletAddress"
+            id="mintAddress"
             placeholder="Enter Mint address..."
             className="flex-1"
             autoComplete="off"

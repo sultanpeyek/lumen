@@ -40,12 +40,23 @@ export function SearchNftsByOwnerInput({
     setIsLoading(false)
   }, [pathname, searchParams])
 
+  const setSampleWalletAddress = () => {
+    setInput('394iV6GMbpAr1VFMQJuFyLfPg3iw54ZohBqUsY8mGRfL')
+  }
+
   return (
     <Card>
       <CardHeader>
         <CardTitle>Search NFT by Owner</CardTitle>
         <CardDescription>
-          Enter a Solana wallet address to begin your search.
+          Enter a Solana wallet address to begin your search or{' '}
+          <span
+            className="text-primary cursor-pointer"
+            onClick={setSampleWalletAddress}
+          >
+            use a sample address
+          </span>{' '}
+          to see how it works.
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-6">

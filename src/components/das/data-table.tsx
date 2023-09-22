@@ -1,10 +1,19 @@
 'use client'
 
 import * as React from 'react'
-import {ChevronDownIcon, DotsHorizontalIcon} from '@radix-ui/react-icons'
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  CaretSortIcon,
+  EyeNoneIcon,
+  ChevronDownIcon,
+  DotsHorizontalIcon,
+  DownloadIcon,
+} from '@radix-ui/react-icons'
 import {
   ColumnDef,
   ColumnFiltersState,
+  RowSelectionState,
   SortingState,
   VisibilityState,
   flexRender,
@@ -53,6 +62,9 @@ import {
 import {usePathname} from 'next/navigation'
 import {useIsMounted} from '@/hooks/use-is-mounted'
 import Image from 'next/image'
+import {useToast} from '@/components/ui/use-toast'
+import {CONFIG} from '@/config/api'
+import {DAS} from 'helius-sdk'
 
 interface DataTableProps {
   data: Asset[]
@@ -106,10 +118,45 @@ const columns: ColumnDef<Asset>[] = [
   },
   {
     accessorKey: 'name',
-    header: 'NFT Name',
+    header: ({column}) => {
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              className="-ml-3 h-8 data-[state=open]:bg-accent"
+            >
+              <span>NFT Name</span>
+              {column.getIsSorted() === 'desc' ? (
+                <ArrowDownIcon className="ml-2 h-4 w-4" />
+              ) : column.getIsSorted() === 'asc' ? (
+                <ArrowUpIcon className="ml-2 h-4 w-4" />
+              ) : (
+                <CaretSortIcon className="ml-2 h-4 w-4" />
+              )}
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start">
+            <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
+              <ArrowUpIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+              Asc
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => column.toggleSorting(true)}>
+              <ArrowDownIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+              Desc
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => column.toggleVisibility(false)}>
+              <EyeNoneIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+              Hide
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )
+    },
     cell: ({row}) => (
       <div className="flex items-center gap-2">
-        <div>{row.getValue('name')}</div>
+        <div>{row.getValue('name') !== '' ? row.getValue('name') : '-'}</div>
       </div>
     ),
   },
@@ -126,7 +173,42 @@ const columns: ColumnDef<Asset>[] = [
   },
   {
     accessorKey: 'collectionAddress',
-    header: 'Collection',
+    header: ({column}) => {
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              className="-ml-3 h-8 data-[state=open]:bg-accent"
+            >
+              <span>Collection Address</span>
+              {column.getIsSorted() === 'desc' ? (
+                <ArrowDownIcon className="ml-2 h-4 w-4" />
+              ) : column.getIsSorted() === 'asc' ? (
+                <ArrowUpIcon className="ml-2 h-4 w-4" />
+              ) : (
+                <CaretSortIcon className="ml-2 h-4 w-4" />
+              )}
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start">
+            <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
+              <ArrowUpIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+              Asc
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => column.toggleSorting(true)}>
+              <ArrowDownIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+              Desc
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => column.toggleVisibility(false)}>
+              <EyeNoneIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+              Hide
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )
+    },
     cell: ({row}) =>
       row.getValue('collectionAddress') ? (
         <Link
@@ -138,6 +220,53 @@ const columns: ColumnDef<Asset>[] = [
       ) : (
         '-'
       ),
+  },
+  {
+    accessorKey: 'royaltyPercent',
+    header: ({column}) => {
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              className="-ml-3 h-8 data-[state=open]:bg-accent"
+            >
+              <span>Royalty Percent</span>
+              {column.getIsSorted() === 'desc' ? (
+                <ArrowDownIcon className="ml-2 h-4 w-4" />
+              ) : column.getIsSorted() === 'asc' ? (
+                <ArrowUpIcon className="ml-2 h-4 w-4" />
+              ) : (
+                <CaretSortIcon className="ml-2 h-4 w-4" />
+              )}
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start">
+            <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
+              <ArrowUpIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+              Asc
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => column.toggleSorting(true)}>
+              <ArrowDownIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+              Desc
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => column.toggleVisibility(false)}>
+              <EyeNoneIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+              Hide
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )
+    },
+    cell: ({row}) => {
+      const value = parseFloat(row.getValue('royaltyPercent')) * 100
+
+      if (value % 1 === 0) {
+        return `${value}%`
+      }
+      return `${value.toFixed(2)}%`
+    },
   },
   {
     id: 'actions',
@@ -161,13 +290,15 @@ const columns: ColumnDef<Asset>[] = [
             >
               Copy Mint Address
             </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() =>
-                navigator.clipboard.writeText(nft.collectionAddress)
-              }
-            >
-              Copy Collection Address
-            </DropdownMenuItem>
+            {nft.collectionAddress && (
+              <DropdownMenuItem
+                onClick={() =>
+                  navigator.clipboard.writeText(nft.collectionAddress ?? '')
+                }
+              >
+                Copy Collection Address
+              </DropdownMenuItem>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       )
@@ -181,7 +312,9 @@ export function DataTable({data}: DataTableProps) {
     [],
   )
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
+    React.useState<VisibilityState>({
+      royaltyPercent: false,
+    })
   const [rowSelection, setRowSelection] = React.useState({})
   const [rowsPerPage, setRowsPerPage] = React.useState(10)
 
@@ -252,6 +385,65 @@ export function DataTable({data}: DataTableProps) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [table.getState().pagination.pageIndex, isMounted])
+
+  const {toast} = useToast()
+  React.useEffect(() => {
+    if (data.length >= CONFIG.HELIUS_MAX_LIMIT_PER_REQUEST) {
+      toast({
+        title: 'Demo Limitation',
+        description: `The API results are capped at ${CONFIG.HELIUS_MAX_LIMIT_PER_REQUEST} items for demo purposes.`,
+        duration: 5000,
+      })
+    }
+  }, [data])
+
+  function downloadIDs(data: Asset[]) {
+    // Extract all IDs
+    const ids = data.map(item => item.id) // Assuming your data items have an 'id' field
+
+    // Convert the IDs array into a JSON string
+    const json = JSON.stringify(ids, null, 2) // The '2' here is for pretty-printing
+
+    // Create a Blob from the JSON string
+    const blob = new Blob([json], {type: 'application/json'})
+    const url = URL.createObjectURL(blob)
+
+    // Create a temporary anchor element and trigger the download
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'ids.json'
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+
+    // Clean up by revoking the object URL
+    URL.revokeObjectURL(url)
+  }
+
+  function downloadSelectedIDs(data: Asset[], selectedRows: RowSelectionState) {
+    // Extract IDs from selected rows using the indices (keys) in the selectedRows object
+    const selectedIds = Object.keys(selectedRows).map(
+      index => data[parseInt(index)].id,
+    )
+
+    // Convert the IDs array into a JSON string
+    const json = JSON.stringify(selectedIds, null, 2)
+
+    // Create a Blob from the JSON string
+    const blob = new Blob([json], {type: 'application/json'})
+    const url = URL.createObjectURL(blob)
+
+    // Create a temporary anchor element and trigger the download
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'selected_ids.json'
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+
+    // Clean up by revoking the object URL
+    URL.revokeObjectURL(url)
+  }
 
   return (
     <div className="w-full max-w-full space-y-6">
@@ -388,6 +580,24 @@ export function DataTable({data}: DataTableProps) {
             </Button>
           </div>
         </div>
+      </div>
+      <div className="flex flex-col sm:flex-row items-center gap-2 max-w-[200px] sm:max-w-[600px] mx-auto">
+        <Button onClick={() => downloadIDs(data)} className="w-full flex">
+          <DownloadIcon className="mr-2" />
+          <span>
+            <span className="hidden md:inline">Download</span> IDs
+          </span>
+        </Button>
+        <Button
+          onClick={() => downloadSelectedIDs(data, rowSelection)}
+          disabled={Object.keys(rowSelection).length === 0}
+          className="w-full flex"
+        >
+          <DownloadIcon className="mr-2" />
+          <span>
+            <span className="hidden md:inline">Download</span> Selected IDs
+          </span>
+        </Button>
       </div>
     </div>
   )

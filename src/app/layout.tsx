@@ -3,6 +3,7 @@ import './globals.css'
 import type {Metadata} from 'next'
 import AnimatedBackgroundGradient from '@/components/common/animated-background-gradient'
 import {CONFIG} from '@/config/site'
+import {Toaster} from '@/components/ui/toaster'
 
 export const metadata: Metadata = CONFIG.metadata
 
@@ -18,6 +19,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
           <AnimatedBackgroundGradient className="h-2" />
           <Footer />
         </div>
+        <Toaster />
       </body>
     </html>
   )

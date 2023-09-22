@@ -5,13 +5,14 @@ export function extractData(data: DAS.GetAssetResponse[]): Asset[] {
   const extractedData = data.map(item => {
     return {
       id: item.id,
-      name: item.content?.metadata.name ?? '',
-      symbol: item.content?.metadata.symbol ?? '',
-      imageFromCdn: getImageLinkFromCdn(item) ?? '',
-      imageFromExternalUrl: getImageLinkFromExternalUrl(item) ?? '',
-      collectionAddress:
-        item.grouping?.find(group => group.group_key === 'collection')
-          ?.group_value ?? '',
+      name: item.content?.metadata?.name?.trim(),
+      symbol: item.content?.metadata?.symbol?.trim(),
+      imageFromCdn: getImageLinkFromCdn(item),
+      imageFromExternalUrl: getImageLinkFromExternalUrl(item),
+      collectionAddress: item.grouping?.find(
+        group => group.group_key === 'collection',
+      )?.group_value,
+      royaltyPercent: item.royalty?.percent,
       rawData: item,
     }
   })

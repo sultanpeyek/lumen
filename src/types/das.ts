@@ -9,10 +9,10 @@ export type MethodType =
 
 export interface Asset {
   id: string
-  name: string
-  symbol: string
-  imageFromCdn: string
-  imageFromExternalUrl: string
-  collectionAddress: string
+  name?: string
+  symbol?: string
+  imageFromCdn?: string
+  imageFromExternalUrl?: string
+  collectionAddress?: string
   rawData: DAS.GetAssetResponse
 }

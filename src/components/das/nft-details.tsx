@@ -1,5 +1,6 @@
 'use client'
 
+import {Badge} from '@/components/ui/badge'
 import {Button} from '@/components/ui/button'
 import {Checkbox} from '@/components/ui/checkbox'
 import {
@@ -72,11 +73,21 @@ export function NftDetails({data}: NftDetailsProps) {
     )
   }
 
+  // TODO: Report to Helius team to add the `token_standard`
+  const metadata = data.content?.metadata as unknown as {
+    token_standard: string
+  }
+
   return (
     <div className="grid grid-cols-1 items-start justify-start content-start">
       {data.id && (
         <div className="block truncate overflow-hidden">
-          <h1 className="text-lg font-bold flex-shrink-0">NFT Details</h1>
+          <div className="py-2 space-x-2">
+            {data.compression?.compressed && <Badge>Compressed NFT</Badge>}
+            {metadata.token_standard === 'ProgrammableNonFungible' && (
+              <Badge>Programmable NFT</Badge>
+            )}
+          </div>
           <div className="flex items-center justify-start space-x-2">
             <div className="text-sm text-muted-foreground truncate flex-none shrink">
               {data.id}

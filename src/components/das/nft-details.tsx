@@ -42,7 +42,7 @@ export function NftDetails({data}: NftDetailsProps) {
       <img
         src={content?.links.image}
         alt={content?.metadata.name || 'NFT Image'}
-        className="w-full h-auto rounded-md"
+        className="w-full h-auto rounded-md aspect-square object-contain"
       />
     )
   }
@@ -54,7 +54,7 @@ export function NftDetails({data}: NftDetailsProps) {
   }
 
   return (
-    <div className="grid">
+    <div className="grid grid-cols-1 items-start justify-start content-start">
       {data.id && (
         <div className="block truncate overflow-hidden">
           <h1 className="text-lg font-bold flex-shrink-0">NFT Details</h1>

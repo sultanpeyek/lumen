@@ -59,12 +59,12 @@
 
   /* Safari Fallback */
   .safari-fallback {
-    height: 100dvh; /* Your preferred property value */
+    max-height: 100dvh; /* Your preferred property value */
   }
 
-  @supports not (height: 100dvh) {
+  @supports not (max-height: 100dvh) {
     .safari-fallback {
-      height: 100vh; /* Fallback value */
+      max-height: 100vh; /* Fallback value */
     }
   }
 

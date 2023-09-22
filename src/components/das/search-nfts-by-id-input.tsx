@@ -9,9 +9,9 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import {Input} from '@/components/ui/input'
-import {useRouter} from 'next/navigation'
+import {usePathname, useRouter, useSearchParams} from 'next/navigation'
 import * as React from 'react'
-import {FaSearch} from 'react-icons/fa'
+import {FaSearch, FaSpinner} from 'react-icons/fa'
 
 interface SearchNftsByIdInputProps {
   defaultValue: string
@@ -25,8 +25,18 @@ export function SearchNftsByIdInput({defaultValue}: SearchNftsByIdInputProps) {
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setIsLoading(true)
     router.push(`/assets/id/${input}`, {scroll: false})
   }
+
+  const [isLoading, setIsLoading] = React.useState(false)
+
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+
+  React.useEffect(() => {
+    setIsLoading(false)
+  }, [pathname, searchParams])
 
   const setSampleMintAddress = () => {
     setInput('HL9Uadka3nHM6gHYQmBAopBwU79tviorkSYocCJAW1Da')
@@ -61,7 +71,11 @@ export function SearchNftsByIdInput({defaultValue}: SearchNftsByIdInputProps) {
             onChange={event => setInput(event.target.value)}
           />
           <Button type="submit" size="icon" disabled={inputLength === 0}>
-            <FaSearch className="h-4 w-4" />
+            {isLoading ? (
+              <FaSpinner className="h-4 w-4 animate-spin" />
+            ) : (
+              <FaSearch className="h-4 w-4" />
+            )}
             <span className="sr-only">Search</span>
           </Button>
         </form>

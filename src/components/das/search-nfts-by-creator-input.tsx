@@ -11,9 +11,9 @@ import {
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
 import {Switch} from '@/components/ui/switch'
-import {useRouter} from 'next/navigation'
+import {usePathname, useRouter, useSearchParams} from 'next/navigation'
 import * as React from 'react'
-import {FaSearch} from 'react-icons/fa'
+import {FaSearch, FaSpinner} from 'react-icons/fa'
 
 interface SearchNftsByCreatorInputProps {
   defaultValue: string
@@ -35,11 +35,21 @@ export function SearchNftsByCreatorInput({
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setIsLoading(true)
     const url = `/assets/creator/${
       isOnlyVerified ? 'verified' : 'all'
     }/${input}`
     router.push(url, {scroll: false})
   }
+
+  const [isLoading, setIsLoading] = React.useState(false)
+
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+
+  React.useEffect(() => {
+    setIsLoading(false)
+  }, [pathname, searchParams])
 
   const setSampleCreatorAddress = () => {
     setInput('FEg3mmpcrcRsVTuc2n3oghHpRvAtEJJau4KWjaPpLKcA')
@@ -73,7 +83,11 @@ export function SearchNftsByCreatorInput({
               onChange={event => setInput(event.target.value)}
             />
             <Button type="submit" size="icon" disabled={inputLength === 0}>
-              <FaSearch className="h-4 w-4" />
+              {isLoading ? (
+                <FaSpinner className="h-4 w-4 animate-spin" />
+              ) : (
+                <FaSearch className="h-4 w-4" />
+              )}
               <span className="sr-only">Search</span>
             </Button>
           </div>

@@ -1,40 +1,46 @@
 import Link from 'next/link'
+import {CONFIG} from '@/config/site'
 
 export default function Footer() {
+  const {madeBy, repos, poweredBy} = CONFIG.footer
+
   return (
     <div className="w-full mx-auto text-white py-4 shadow-md">
       <div className="container md:flex md:justify-between md:items-center">
         <div className="text-center md:text-left mb-2 md:mb-0">
           Made by{' '}
           <Link
-            href="https://x.com/sultanpeyek"
+            href={madeBy.link}
             className="text-primary hover:underline"
             target="_blank"
             rel="noopener noreferrer"
           >
-            @sultanpeyek
+            {madeBy.name}
           </Link>
         </div>
 
         <div className="flex justify-center text-center space-x-6">
           <Link
-            href="https://github.com/sultanpeyek/lumen"
-            className="text-gray-300 hover:text-white"
+            href={repos.link}
+            className="group"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Open-sourced on GitHub
+            {repos.label}{' '}
+            <span className="text-primary group-hover:underline">
+              {repos.platform}
+            </span>
           </Link>
           <span className="text-gray-500">|</span>
           <Link
-            href="https://www.helius.dev/blog/all-you-need-to-know-about-solanas-new-das-api"
-            className="text-gray-300 hover:text-white group"
+            href={poweredBy.link}
+            className=" group"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Powered by{' '}
+            {poweredBy.label}{' '}
             <span className="text-primary group-hover:underline">
-              Helius DAS API
+              {poweredBy.name}
             </span>
           </Link>
         </div>

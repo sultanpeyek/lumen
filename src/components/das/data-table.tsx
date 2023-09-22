@@ -241,7 +241,7 @@ export function DataTable({data}: DataTableProps) {
   }, [table.getState().pagination.pageIndex, isMounted])
 
   return (
-    <div className="w-full max-w-full">
+    <div className="w-full max-w-full space-y-6">
       <div className="flex items-center justify-between space-x-2">
         <Input
           placeholder="Filter name..."
@@ -276,7 +276,7 @@ export function DataTable({data}: DataTableProps) {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="mt-4 rounded-md border overflow-auto">
+      <div className="rounded-md border overflow-auto">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map(headerGroup => (
@@ -326,7 +326,7 @@ export function DataTable({data}: DataTableProps) {
           </TableBody>
         </Table>
       </div>
-      <div className="flex flex-col sm:flex-row items-center py-4 space-y-2">
+      <div className="flex flex-col sm:flex-row items-center space-y-2">
         <div className="flex-auto space-y-1">
           <div className="text-sm text-muted-foreground">
             Showing{' '}

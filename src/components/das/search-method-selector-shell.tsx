@@ -1,6 +1,6 @@
 import {Card, CardContent, CardHeader} from '@/components/ui/card'
 import {Skeleton} from '@/components/ui/skeleton'
-import {searchMethods} from '@/config/site'
+import {CONFIG} from '@/config/site'
 import {cn} from '@/lib/utils'
 
 export function SearchMethodSelectorShell() {
@@ -12,9 +12,9 @@ export function SearchMethodSelectorShell() {
       </CardHeader>
       <CardContent className="grid gap-6">
         <div className="grid grid-cols-3 gap-4">
-          {searchMethods.map(criteria => (
+          {Object.entries(CONFIG.searchMethods).map(([key]) => (
             <div
-              key={criteria.value}
+              key={key}
               className={cn(
                 'flex flex-col items-center justify-between rounded-md border border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground cursor-pointer',
               )}

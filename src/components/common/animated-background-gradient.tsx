@@ -75,11 +75,8 @@ export default function AnimatedBackgroundGradient({
 
   return (
     <div
-      className={cn('bg-primary', className)}
+      className={cn('bg-primary block w-full p-0 m-0', className)}
       style={{
-        width: '100%',
-        padding: 0,
-        margin: 0,
         background: gradient,
       }}
     />

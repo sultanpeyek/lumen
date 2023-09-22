@@ -11,7 +11,8 @@ export interface Asset {
   id: string
   name: string
   symbol: string
-  image: string
+  imageFromCdn: string
+  imageFromExternalUrl: string
   collectionAddress: string
   rawData: DAS.GetAssetResponse
 }

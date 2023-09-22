@@ -2,8 +2,17 @@
 
 import {Button} from '@/components/ui/button'
 import {Checkbox} from '@/components/ui/checkbox'
+import {
+  getImageLinkFromCdn,
+  getImageLinkFromExternalUrl,
+  getVideoLinkFromCdn,
+  getVideoLinkFromExternalUrl,
+  getVideoMimeTypeFromCdn,
+  getVideoMimeTypeFromExternalUrl,
+} from '@/lib/extract-data'
 import {DownloadIcon} from '@radix-ui/react-icons'
 import {DAS} from 'helius-sdk'
+import Image from 'next/image'
 import Link from 'next/link'
 import {FaExternalLinkAlt} from 'react-icons/fa'
 
@@ -17,40 +26,50 @@ interface NftDetailsProps {
 export function NftDetails({data}: NftDetailsProps) {
   const {content, creators, ownership} = data
 
-  let mediaElement
-  const extension = getFileExtension(content?.links?.animation_url || '')
+  const imageLinkFromCdn = getImageLinkFromCdn(data)
+  const imageLinkFromExternalUrl = getImageLinkFromExternalUrl(data)
+  const imageLink = imageLinkFromCdn ?? imageLinkFromExternalUrl
 
-  if (extension && videoExtensions.includes(extension)) {
+  const videoLinkFromCdn = getVideoLinkFromCdn(data)
+  const videoLinkFromExternalUrl = getVideoLinkFromExternalUrl(data)
+  const videoLink = videoLinkFromCdn ?? videoLinkFromExternalUrl
+
+  const videoMimeTypeFromCdn = getVideoMimeTypeFromCdn(data)
+  const videoMimeTypeFromExternalUrl = getVideoMimeTypeFromExternalUrl(data)
+  const videoMimeType = videoMimeTypeFromCdn ?? videoMimeTypeFromExternalUrl
+
+  let mediaElement
+  if (videoLink) {
     mediaElement = (
       <video
         width="100%"
         controls
-        {...(content?.links?.image && {
-          poster: content?.links?.image,
+        {...(imageLink && {
+          poster: imageLink,
         })}
       >
-        <source
-          src={content?.links?.animation_url}
-          type={getVideoMimeType(extension)}
-        />
+        <source src={videoLink} type={videoMimeType} />
         Your browser does not support the video tag.
       </video>
     )
-  } else if (content?.links?.image) {
-    mediaElement = (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
-        src={content?.links.image}
+  } else if (imageLink) {
+    mediaElement = videoLinkFromCdn ? (
+      <Image
+        src={imageLink}
         alt={content?.metadata.name || 'NFT Image'}
         className="w-full h-auto rounded-md aspect-square object-contain"
+        width={468}
+        height={468}
+      />
+    ) : (
+      <img
+        src={imageLink}
+        alt={content?.metadata.name || 'NFT Image'}
+        className="w-full h-auto rounded-md aspect-square object-contain"
+        width={468}
+        height={468}
       />
     )
-  }
-
-  const jsonStyle = {
-    propertyStyle: {color: 'red'},
-    stringStyle: {color: 'green'},
-    numberStyle: {color: 'darkorange'},
   }
 
   return (
@@ -75,12 +94,12 @@ export function NftDetails({data}: NftDetailsProps) {
         <div className="w-full">
           {mediaElement}
 
-          {(content?.links?.image || content?.links?.animation_url) && (
+          {(imageLink || videoLink) && (
             <div className="flex mt-6 space-x-4">
-              {content?.links?.image && (
+              {imageLink && (
                 <Button type="button" asChild>
                   <Link
-                    href={content.links.image}
+                    href={imageLink}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -92,10 +111,10 @@ export function NftDetails({data}: NftDetailsProps) {
                 </Button>
               )}
 
-              {content?.links?.animation_url && (
+              {videoLink && (
                 <Button type="button" asChild>
                   <Link
-                    href={content.links.animation_url}
+                    href={videoLink}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -212,38 +231,4 @@ export function NftDetails({data}: NftDetailsProps) {
       </div>
     </div>
   )
-}
-const videoExtensions = ['mp4', 'webm', 'ogg', 'mov']
-
-const getFileExtension = (url: string | undefined) => {
-  if (!url) return '' // Handle potential empty or undefined values
-
-  let extension = ''
-  try {
-    const urlObject = new URL(url)
-    if (urlObject.searchParams.has('ext')) {
-      extension = urlObject.searchParams.get('ext') || ''
-    } else {
-      extension = url.split('.').pop() || ''
-    }
-  } catch (error) {
-    console.error('Unable to parse URL:', error)
-  }
-
-  return extension
-}
-
-const getVideoMimeType = (extension: string) => {
-  switch (extension) {
-    case 'mp4':
-      return 'video/mp4'
-    case 'webm':
-      return 'video/webm'
-    case 'ogg':
-      return 'video/ogg'
-    case 'mov':
-      return 'video/quicktime'
-    default:
-      return '' // default MIME type if not recognized
-  }
 }

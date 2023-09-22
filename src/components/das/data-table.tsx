@@ -52,6 +52,7 @@ import {
 } from '@/lib/safe-local-storage'
 import {usePathname} from 'next/navigation'
 import {useIsMounted} from '@/hooks/use-is-mounted'
+import Image from 'next/image'
 
 interface DataTableProps {
   data: Asset[]
@@ -83,7 +84,19 @@ const columns: ColumnDef<Asset>[] = [
     cell: ({row}) => (
       <NftDetailsDialog data={row.original}>
         <Avatar className="rounded-sm cursor-pointer">
-          <AvatarImage src={row.getValue('image')} alt="Image" />
+          {row.original.imageFromCdn ? (
+            <AvatarImage asChild src={row.original.imageFromCdn}>
+              <Image
+                src={row.original.imageFromCdn}
+                alt="Image"
+                width={40}
+                height={40}
+                className="object-cover"
+              />
+            </AvatarImage>
+          ) : (
+            <AvatarImage src={row.original.imageFromExternalUrl} />
+          )}
           <AvatarFallback className="rounded-sm">
             {getInitials(row.getValue('name'))}
           </AvatarFallback>

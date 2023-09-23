@@ -1,8 +1,49 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Lumen: Solana NFT Explorer
 
-## Getting Started
+Welcome to **Lumen**, an efficient NFT Explorer for Solana, designed to
+illuminate the intricate world of NFTs. This project was crafted as a submission
+for the mini-hackathon organized by Helius.
 
-First, run the development server:
+## Introduction
+
+Lumen is crafted to bridge the gap between various NFT information sources in
+the Solana ecosystem. By leveraging the power of Helius DAS API, Lumen offers a
+unified experience in NFT exploration.
+
+- 🔗 [Live Demo](https://lumen-solana.vercel.app)
+- 🔗 [Repository](https://github.com/sultanpeyek/lumen)
+
+## Features
+
+- **Various Search Methods:** Define your search intention; be it by owner
+  address, mint address, authority address, collection address, or creator
+  address.
+- **Efficient Navigation:** Experience seamless navigation through a world of
+  NFTs.
+- **Download Capabilities:** Get access to mint lists and download as required.
+- **Helius DAS API Powered:** Backed by the robustness of the Helius DAS API.
+
+## Setup & Local Development
+
+This is a Next.js project. Here's how to get it up and running:
+
+1. **Clone the Repository:**
+
+```bash
+git clone https://github.com/sultanpeyek/lumen
+```
+
+2. **Install Dependencies:**
+
+```bash
+npm install
+# or
+yarn
+# or
+pnpm install
+```
+
+3. **Run the Development Server:**
 
 ```bash
 npm run dev
@@ -12,23 +53,19 @@ yarn dev
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit [http://localhost:3000](http://localhost:3000) to view the app in action.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Built With
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Helius DAS API
+- Next.js
+- Tailwind CSS
+- shadcn UI
+- React Icons
+- TanStack Table
 
-## Learn More
+Feedback & Contributions
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Your insights make Lumen better! Feel free to drop feedback, report issues, or
+contribute to the
+[Lumen GitHub repository](https://github.com/sultanpeyek/lumen).

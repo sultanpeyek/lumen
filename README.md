@@ -64,7 +64,7 @@ Visit [http://localhost:3000](http://localhost:3000) to view the app in action.
 - React Icons
 - TanStack Table
 
-Feedback & Contributions
+## Feedback & Contributions
 
 Your insights make Lumen better! Feel free to drop feedback, report issues, or
 contribute to the

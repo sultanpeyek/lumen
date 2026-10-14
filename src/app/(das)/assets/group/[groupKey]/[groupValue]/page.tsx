@@ -5,16 +5,16 @@ import {extractData} from '@/lib/extract-data'
 import {getAssetsByGroup} from '@/lib/get-assets-by-group'
 
 interface PageProps {
-  params: {
+  params: Promise<{
     groupKey: string
     groupValue: string
-  }
+  }>
 }
 
 export const revalidate = 600
 
 export default async function Page({params}: PageProps) {
-  const {groupKey, groupValue} = params
+  const {groupKey, groupValue} = await params
 
   const startTime = Date.now()
 

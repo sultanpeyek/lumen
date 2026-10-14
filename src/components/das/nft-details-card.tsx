@@ -1,9 +1,9 @@
 import {NftDetails} from '@/components/das/nft-details'
 import {Card, CardContent} from '@/components/ui/card'
-import {DAS} from 'helius-sdk'
+import type {GetAssetResponse} from '@/lib/helius'
 
 interface NftDetailsCardProps {
-  data: DAS.GetAssetResponse
+  data: GetAssetResponse
 }
 
 export function NftDetailsCard({data}: NftDetailsCardProps) {

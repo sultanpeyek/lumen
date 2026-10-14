@@ -1,7 +1,7 @@
 import {Asset} from '@/types/das'
-import {DAS} from 'helius-sdk'
+import type {GetAssetResponse} from '@/lib/helius'
 
-export function extractData(data: DAS.GetAssetResponse[]): Asset[] {
+export function extractData(data: GetAssetResponse[]): Asset[] {
   const extractedData = data.map(item => {
     return {
       id: item.id,
@@ -29,7 +29,7 @@ const imageMimeTypes = [
 ]
 
 export function getImageLinkFromCdn(
-  data: DAS.GetAssetResponse,
+  data: GetAssetResponse,
 ): string | undefined {
   const file = data.content?.files?.find(file =>
     imageMimeTypes.includes(file.mime ?? ''),
@@ -47,7 +47,7 @@ export function getImageLinkFromCdn(
 }
 
 export function getImageLinkFromExternalUrl(
-  data: DAS.GetAssetResponse,
+  data: GetAssetResponse,
 ): string | undefined {
   const fileFromFiles = data.content?.files?.find(file =>
     imageMimeTypes.includes(file.mime ?? ''),
@@ -66,7 +66,7 @@ const videoMimeTypes = [
 const videoExtensions = ['mp4', 'webm', 'ogg', 'mov']
 
 export function getVideoLinkFromCdn(
-  data: DAS.GetAssetResponse,
+  data: GetAssetResponse,
 ): string | undefined {
   const file = data.content?.files?.find(file =>
     videoMimeTypes.includes(file.mime ?? ''),
@@ -78,7 +78,7 @@ export function getVideoLinkFromCdn(
 }
 
 export function getVideoLinkFromExternalUrl(
-  data: DAS.GetAssetResponse,
+  data: GetAssetResponse,
 ): string | undefined {
   const fileFromFiles = data.content?.files?.find(file =>
     videoMimeTypes.includes(file.mime ?? ''),
@@ -91,7 +91,7 @@ export function getVideoLinkFromExternalUrl(
 }
 
 export function getVideoMimeTypeFromCdn(
-  data: DAS.GetAssetResponse,
+  data: GetAssetResponse,
 ): string | undefined {
   const file = data.content?.files?.find(file =>
     videoExtensions.includes(file.mime ?? ''),
@@ -100,7 +100,7 @@ export function getVideoMimeTypeFromCdn(
 }
 
 export function getVideoMimeTypeFromExternalUrl(
-  data: DAS.GetAssetResponse,
+  data: GetAssetResponse,
 ): string | undefined {
   const fileFromFiles = data.content?.files?.find(file =>
     videoMimeTypes.includes(file.mime ?? ''),

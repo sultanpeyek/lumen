@@ -1,6 +1,7 @@
 import {CONFIG} from '@/config/api'
 import {zod} from '@/lib/zod'
-import {DAS, Helius} from 'helius-sdk'
+import {getHelius} from '@/lib/helius'
+import type {GetAssetResponseList} from '@/lib/helius'
 import {z} from 'zod'
 
 export const getAssetsByCreator = zod(
@@ -8,10 +9,10 @@ export const getAssetsByCreator = zod(
     creatorAddress: z.string(),
     onlyVerified: z.boolean(),
   }),
-  async (input): Promise<DAS.GetAssetResponseList> => {
+  async (input): Promise<GetAssetResponseList> => {
     const {creatorAddress, onlyVerified} = input
 
-    const helius = new Helius(process.env.HELIUS_API_KEY!)
+    const helius = getHelius()
 
     let page = 1
     let hasMoreResults = true
@@ -19,7 +20,7 @@ export const getAssetsByCreator = zod(
     const MAX_ITEMS_PER_REQUEST = CONFIG.MAX_API_REQUEST_ITEMS
 
     while (hasMoreResults) {
-      const result = await helius.rpc.getAssetsByCreator({
+      const result = await helius.getAssetsByCreator({
         creatorAddress,
         onlyVerified,
         page,

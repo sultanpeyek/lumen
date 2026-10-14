@@ -1,12 +1,13 @@
 import {CONFIG} from '@/config/api'
 import {zod} from '@/lib/zod'
-import {DAS, Helius} from 'helius-sdk'
+import {getHelius} from '@/lib/helius'
+import type {GetAssetResponseList} from '@/lib/helius'
 import {z} from 'zod'
 
 export const getAssetsByOwner = zod(
   z.string(),
-  async (ownerAddress): Promise<DAS.GetAssetResponseList> => {
-    const helius = new Helius(process.env.HELIUS_API_KEY!)
+  async (ownerAddress): Promise<GetAssetResponseList> => {
+    const helius = getHelius()
 
     let page = 1
     let hasMoreResults = true
@@ -14,7 +15,7 @@ export const getAssetsByOwner = zod(
     const MAX_ITEMS_PER_REQUEST = CONFIG.MAX_API_REQUEST_ITEMS
 
     while (hasMoreResults) {
-      const result = await helius.rpc.getAssetsByOwner({
+      const result = await helius.getAssetsByOwner({
         ownerAddress,
         page,
         limit: CONFIG.HELIUS_MAX_LIMIT_PER_REQUEST,

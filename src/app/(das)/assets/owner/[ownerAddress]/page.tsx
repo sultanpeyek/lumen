@@ -6,15 +6,15 @@ import {getAssetsByOwner} from '@/lib/get-assets-by-owner'
 import * as React from 'react'
 
 interface PageProps {
-  params: {
+  params: Promise<{
     ownerAddress: string
-  }
+  }>
 }
 
 export const revalidate = 60
 
 export default async function Page({params}: PageProps) {
-  const {ownerAddress} = params
+  const {ownerAddress} = await params
 
   const startTime = Date.now()
 

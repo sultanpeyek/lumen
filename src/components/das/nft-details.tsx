@@ -12,7 +12,7 @@ import {
   getVideoMimeTypeFromExternalUrl,
 } from '@/lib/extract-data'
 import {DownloadIcon} from '@radix-ui/react-icons'
-import {DAS} from 'helius-sdk'
+import type {GetAssetResponse} from '@/lib/helius'
 import Image from 'next/image'
 import Link from 'next/link'
 import {FaExternalLinkAlt} from 'react-icons/fa'
@@ -21,7 +21,7 @@ import {JsonView, collapseAllNested, darkStyles} from 'react-json-view-lite'
 import 'react-json-view-lite/dist/index.css'
 
 interface NftDetailsProps {
-  data: DAS.GetAssetResponse
+  data: GetAssetResponse
 }
 
 export function NftDetails({data}: NftDetailsProps) {

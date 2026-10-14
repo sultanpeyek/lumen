@@ -16,7 +16,7 @@ Live site: https://lumen-solana.vercel.app
 
 ## Stack
 
-- Next.js 13 (App Router) with React 18 and TypeScript
+- Next.js 16 (App Router) with React 19 and TypeScript, on Node.js 24
 - Tailwind CSS with shadcn/ui components on Radix UI
 - `helius-sdk` for the DAS API, `@solana/web3.js`, and `zod` for input validation
 - `@tanstack/react-table`, `react-json-view-lite`, `react-icons`

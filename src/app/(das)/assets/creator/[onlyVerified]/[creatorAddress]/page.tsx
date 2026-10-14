@@ -5,16 +5,16 @@ import {extractData} from '@/lib/extract-data'
 import {getAssetsByCreator} from '@/lib/get-assets-by-creator'
 
 interface PageProps {
-  params: {
+  params: Promise<{
     creatorAddress: string
     onlyVerified: 'verified' | 'all'
-  }
+  }>
 }
 
 export const revalidate = 600
 
 export default async function Page({params}: PageProps) {
-  const {onlyVerified, creatorAddress} = params
+  const {onlyVerified, creatorAddress} = await params
 
   const startTime = Date.now()
 

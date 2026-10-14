@@ -1,4 +1,4 @@
-import {DAS} from 'helius-sdk'
+import type {GetAssetResponse} from '@/lib/helius'
 
 export type MethodType =
   | 'getAssetsByOwner'
@@ -14,5 +14,5 @@ export interface Asset {
   imageFromCdn?: string
   imageFromExternalUrl?: string
   collectionAddress?: string
-  rawData: DAS.GetAssetResponse
+  rawData: GetAssetResponse
 }

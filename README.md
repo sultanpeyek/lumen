@@ -1,71 +1,63 @@
-# Lumen: Solana NFT Explorer
+# Lumen
 
-Welcome to **Lumen**, an efficient NFT Explorer for Solana, designed to
-illuminate the intricate world of NFTs. This project was crafted as a submission
-for the mini-hackathon organized by Helius.
+Archived: this project is no longer maintained. Last activity was in 2023.
 
-## Introduction
+Lumen is a Solana NFT explorer built on the Helius DAS (Digital Asset Standard) API. It looks up NFTs by owner, mint, authority, collection, or creator address, shows their details, and lets you download lists of mint addresses. Helius ran a mini-hackathon, and this project was a submission to it.
 
-Lumen is crafted to bridge the gap between various NFT information sources in
-the Solana ecosystem. By leveraging the power of Helius DAS API, Lumen offers a
-unified experience in NFT exploration.
-
-- 🔗 [Live Demo](https://lumen-solana.vercel.app)
-- 🔗 [Repository](https://github.com/sultanpeyek/lumen)
+Live site: https://lumen-solana.vercel.app
 
 ## Features
 
-- **Various Search Methods:** Define your search intention; be it by owner
-  address, mint address, authority address, collection address, or creator
-  address.
-- **Efficient Navigation:** Experience seamless navigation through a world of
-  NFTs.
-- **Download Capabilities:** Get access to mint lists and download as required.
-- **Helius DAS API Powered:** Backed by the robustness of the Helius DAS API.
+- Search by owner address, mint address, authority address, collection address, or creator address. Creator search can be limited to verified creators.
+- Results table built with TanStack Table, with row selection.
+- NFT detail view with the raw asset JSON.
+- Download mint addresses as `ids.json`, or only the selected rows as `selected_ids.json`.
+- Server-side fetching that pages through Helius results, capped at 1000 items per request.
 
-## Setup & Local Development
+## Stack
 
-This is a Next.js project. Here's how to get it up and running:
+- Next.js 13 (App Router) with React 18 and TypeScript
+- Tailwind CSS with shadcn/ui components on Radix UI
+- `helius-sdk` for the DAS API, `@solana/web3.js`, and `zod` for input validation
+- `@tanstack/react-table`, `react-json-view-lite`, `react-icons`
 
-1. **Clone the Repository:**
+## Getting started
 
-```bash
-git clone https://github.com/sultanpeyek/lumen
-```
-
-2. **Install Dependencies:**
+The repo uses pnpm (`pnpm-lock.yaml`).
 
 ```bash
-npm install
-# or
-yarn
-# or
 pnpm install
-```
-
-3. **Run the Development Server:**
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
 pnpm dev
 ```
 
-Visit [http://localhost:3000](http://localhost:3000) to view the app in action.
+Open http://localhost:3000. Other scripts:
 
-## Built With
+- `pnpm build` creates a production build.
+- `pnpm start` serves the production build.
+- `pnpm lint` runs `next lint`.
 
-- Helius DAS API
-- Next.js
-- Tailwind CSS
-- shadcn UI
-- React Icons
-- TanStack Table
+## Configuration
 
-## Feedback & Contributions
+Set one environment variable, for example in `.env.local`:
 
-Your insights make Lumen better! Feel free to drop feedback, report issues, or
-contribute to the
-[Lumen GitHub repository](https://github.com/sultanpeyek/lumen).
+- `HELIUS_API_KEY`: your Helius API key. The server-side fetch helpers in `src/lib` read it.
+
+## Project structure
+
+```
+src/
+  app/
+    (das)/assets/   result pages by owner, authority, creator, group, and id
+    (das)/search/   search pages for each method
+  components/
+    common/         layout pieces such as footer and heading
+    das/            search inputs, data table, NFT detail views
+    ui/             shadcn/ui components
+  config/           site and API limits
+  hooks/            navigation and mount hooks
+  lib/              Helius DAS fetch helpers and utilities
+```
+
+## Deployment
+
+The live site runs on Vercel.

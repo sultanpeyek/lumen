@@ -6,6 +6,12 @@ Lumen is a Solana NFT explorer built on the Helius DAS (Digital Asset Standard) 
 
 Live site: https://lumen-solana.vercel.app
 
+## Launch
+
+Lumen was announced on 23 September 2023 as an entry to the Helius mini-hackathon, which offered a Solana conference ticket in Amsterdam as the prize. The announcement includes a 42-second walkthrough video.
+
+[![Lumen launch tweet](docs/tweets/launch-2023-09-23.png)](https://x.com/sultanpeyek/status/1705541062348198170)
+
 ## Features
 
 - Search by owner address, mint address, authority address, collection address, or creator address. Creator search can be limited to verified creators.

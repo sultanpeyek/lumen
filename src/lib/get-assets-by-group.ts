@@ -1,5 +1,6 @@
 import {zod} from '@/lib/zod'
-import {DAS, Helius} from 'helius-sdk'
+import {getHelius} from '@/lib/helius'
+import type {GetAssetResponseList} from '@/lib/helius'
 import {z} from 'zod'
 import {CONFIG} from '@/config/api' // Import the CONFIG
 
@@ -8,10 +9,10 @@ export const getAssetsByGroup = zod(
     groupKey: z.string(),
     groupValue: z.string(),
   }),
-  async (input): Promise<DAS.GetAssetResponseList> => {
+  async (input): Promise<GetAssetResponseList> => {
     const {groupKey, groupValue} = input
 
-    const helius = new Helius(process.env.HELIUS_API_KEY!)
+    const helius = getHelius()
 
     let page = 1
     let hasMoreResults = true
@@ -19,7 +20,7 @@ export const getAssetsByGroup = zod(
     const MAX_ITEMS_PER_REQUEST = CONFIG.MAX_API_REQUEST_ITEMS
 
     while (hasMoreResults) {
-      const result = await helius.rpc.getAssetsByGroup({
+      const result = await helius.getAssetsByGroup({
         groupKey,
         groupValue,
         page,

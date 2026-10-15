@@ -5,15 +5,15 @@ import {extractData} from '@/lib/extract-data'
 import {getAssetsByAuthority} from '@/lib/get-assets-by-authority'
 
 interface PageProps {
-  params: {
+  params: Promise<{
     authorityAddress: string
-  }
+  }>
 }
 
 export const revalidate = 600
 
 export default async function Page({params}: PageProps) {
-  const {authorityAddress} = params
+  const {authorityAddress} = await params
 
   const startTime = Date.now()
 

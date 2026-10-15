@@ -7,15 +7,15 @@ import {getAsset} from '@/lib/get-asset'
 import {notFound} from 'next/navigation'
 
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 export const revalidate = 600
 
 export default async function Page({params}: PageProps) {
-  const {id} = params
+  const {id} = await params
 
   const startTime = Date.now()
 

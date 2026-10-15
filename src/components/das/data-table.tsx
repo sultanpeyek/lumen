@@ -64,7 +64,6 @@ import {useIsMounted} from '@/hooks/use-is-mounted'
 import Image from 'next/image'
 import {useToast} from '@/components/ui/use-toast'
 import {CONFIG} from '@/config/api'
-import {DAS} from 'helius-sdk'
 
 interface DataTableProps {
   data: Asset[]

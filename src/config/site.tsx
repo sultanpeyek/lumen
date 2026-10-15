@@ -1,4 +1,4 @@
-import {Metadata} from 'next'
+import {Metadata, Viewport} from 'next'
 import {
   FaUser,
   FaLayerGroup,
@@ -11,15 +11,17 @@ const metadata: Metadata = {
   title: 'Lumen — SOL NFT Explorer',
   description:
     'Lumen: Efficient SOL NFT exploration with Helius DAS API. Clean interface. Simplified Solana NFT browsing',
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-  },
+}
+
+const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
 }
 
 export const CONFIG = {
   metadata,
+  viewport,
   heading: {
     title: 'Lumen',
     description: 'SOL NFT Explorer',

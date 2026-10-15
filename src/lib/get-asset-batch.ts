@@ -1,13 +1,14 @@
 import {zod} from '@/lib/zod'
-import {DAS, Helius} from 'helius-sdk'
+import {getHelius} from '@/lib/helius'
+import type {GetAssetResponse} from '@/lib/helius'
 import {z} from 'zod'
 
 export const getAssetBatch = zod(
   z.array(z.string()),
-  async (ids): Promise<DAS.GetAssetResponse[]> => {
-    const helius = new Helius(process.env.HELIUS_API_KEY!)
+  async (ids): Promise<GetAssetResponse[]> => {
+    const helius = getHelius()
 
-    const response = await helius.rpc.getAsset(ids)
+    const response = await helius.getAssetBatch({ids})
 
     return response
   },
